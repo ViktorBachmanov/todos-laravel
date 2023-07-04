@@ -1,36 +1,37 @@
 <x-layout>
 
-  <!-- Validation Errors -->
-  @error('password')
-      <div>{{ $message }}</div>
-  @enderror
+  <div class="container">
 
-  <form method="POST" action="{{ route('login') }}">
-      @csrf
+    <!-- Validation Errors -->
+    @error('password')
+        <div>{{ $message }}</div>
+    @enderror
 
-      <!-- Email Address -->
-      <div>
-          <label for="email">Email</label>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-          <input id="email" type="email" name="email" value="{{ old('email') }}" required />
-      </div>
+        <!-- Email Address -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" type="email" name="email" class="form-control" value="{{ old('email') }}" required />
+        </div>
 
-      <!-- Password -->
-      <div>
-          <label for="password">Пароль</label>
+        <!-- Password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input id="password" 
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  required autocomplete="current-password" />
+        </div>
 
-          <input id="password" 
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
-      </div>
+        
+        <button type="submit" class="btn btn-primary">
+            Войти
+        </button>
+    </form>
 
-      
-      <div>
-          <button>
-              Войти
-          </button>
-      </div>
-  </form>
+  </div>
    
 </x-layout>
