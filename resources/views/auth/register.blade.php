@@ -1,52 +1,55 @@
-<!-- Validation Errors -->
-@error('password')
-    <div>{{ $message }}</div>
-@enderror
+<x-layout>
 
-<form method="POST" action="{{ route('register') }}">
-    @csrf
+  <!-- Validation Errors -->
+  @error('password')
+      <div>{{ $message }}</div>
+  @enderror
 
-    <!-- Name -->
-    <div>
-        <label for="name">Имя</label>
+  <form method="POST" action="{{ route('register') }}">
+      @csrf
 
-        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus />
-    </div>
+      <!-- Name -->
+      <div>
+          <label for="name">Имя</label>
 
-    <!-- Email Address -->
-    <div>
-        <label for="email">Email</label>
+          <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus />
+      </div>
 
-        <input id="email" type="email" name="email" value="{{ old('email') }}" required />
-    </div>
+      <!-- Email Address -->
+      <div>
+          <label for="email">Email</label>
 
-    <!-- Password -->
-    <div>
-        <label for="password">Пароль</label>
+          <input id="email" type="email" name="email" value="{{ old('email') }}" required />
+      </div>
 
-        <input id="password" 
-                        type="password"
-                        name="password"
-                        required autocomplete="new-password" />
-    </div>
+      <!-- Password -->
+      <div>
+          <label for="password">Пароль</label>
 
-    <!-- Confirm Password -->
-    <div>
-        <label for="password_confirmation">Подтвердите пароль</label>
+          <input id="password" 
+                          type="password"
+                          name="password"
+                          required autocomplete="new-password" />
+      </div>
 
-        <input id="password_confirmation" 
-                        type="password"
-                        name="password_confirmation" required />
-    </div>
+      <!-- Confirm Password -->
+      <div>
+          <label for="password_confirmation">Подтвердите пароль</label>
 
-    <div>
-        <a href="{{ route('login') }}">
-            Уже зарегистрированы?
-        </a>
+          <input id="password_confirmation" 
+                          type="password"
+                          name="password_confirmation" required />
+      </div>
 
-        <button>
-            Зарегистрироваться
-        </button>
-    </div>
-</form>
+      <div>
+          <a href="{{ route('login') }}">
+              Уже зарегистрированы?
+          </a>
+
+          <button>
+              Зарегистрироваться
+          </button>
+      </div>
+  </form>
    
+</x-layout>
