@@ -20,11 +20,9 @@ use App\Http\Controllers\TodoController;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-  return view('todos');
-})->middleware('auth');
+Route::get('/', [TodoController::class, 'index'])->middleware('auth');
 
 
-Route::get('/todo/{todo}', [TodoController::class, 'index'])->middleware('auth');
-Route::post('/todo', [TodoController::class, 'store'])->middleware('auth');
+Route::get('/todos/{todo}', [TodoController::class, 'show'])->middleware('auth');
+Route::post('/todos', [TodoController::class, 'store'])->middleware('auth');
 

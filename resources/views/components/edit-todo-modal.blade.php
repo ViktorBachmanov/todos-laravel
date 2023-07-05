@@ -21,7 +21,7 @@
   const saveButton = document.getElementById('save-todo');
 
   saveButton.onclick = async function() {
-    const { data } = await axios.post('/todo', {
+    const { data } = await axios.post('/todos', {
       text: document.getElementById('todo-text').value,
     });
 

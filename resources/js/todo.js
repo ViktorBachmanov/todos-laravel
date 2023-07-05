@@ -21,7 +21,7 @@ function createTodoContent(text) {
     editButton.onclick = async (e) => {
         const todoId = e.target.closest(".card").dataset.id;
 
-        const { data } = await axios.get(`/todo/${todoId}`);
+        const { data } = await axios.get(`/todos/${todoId}`);
         console.log("data: ", data);
     };
 
