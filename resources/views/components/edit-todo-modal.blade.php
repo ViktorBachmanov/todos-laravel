@@ -29,7 +29,8 @@
 
     window.todo.add(data.text);
 
-    const modal = new window.bootstrap.Modal('#edit-todo-modal');
-    modal.hide();
+    // const modal = new window.bootstrap.Modal(document.getElementById('edit-todo-modal'));
+    // modal.toggle();
+    $("#edit-todo-modal").modal("hide");
   }
 </script>
