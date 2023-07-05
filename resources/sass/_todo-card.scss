@@ -1,3 +1,13 @@
 .edit-button {
   max-width: 5em;
 }
+
+$imageSize: 150px;
+
+.todo-content__image {
+  min-width: $imageSize;
+  min-height: $imageSize;
+  max-width: $imageSize;
+  max-height: $imageSize;
+  border: 1px solid magenta;
+}

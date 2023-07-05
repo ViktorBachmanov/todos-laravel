@@ -12,7 +12,14 @@ function createTodoCard(data) {
 function createTodoContent(text) {
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
-    todoContent.textContent = text;
+
+    const todoImage = document.createElement("div");
+    todoImage.classList.add("todo-content__image");
+    todoContent.append(todoImage);
+
+    const todoText = document.createElement("div");
+    todoText.textContent = text;
+    todoContent.append(todoText);
 
     const editButton = document.createElement("button");
     editButton.setAttribute("class", "btn btn-primary edit-button");
