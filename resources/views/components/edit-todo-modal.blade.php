@@ -27,7 +27,7 @@
 
     console.log('data: ', data);
 
-    window.todo.add(data.text);
+    window.todo.add(data);
 
     // const modal = new window.bootstrap.Modal(document.getElementById('edit-todo-modal'));
     // modal.toggle();

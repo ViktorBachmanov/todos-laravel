@@ -17,6 +17,7 @@ class TodoResource extends JsonResource
         // return parent::toArray($request);
 
         return [
+          'id' => $this->id,
           'text' => $this->text,
         ];
     }

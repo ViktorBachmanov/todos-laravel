@@ -14,6 +14,11 @@ use App\Http\Resources\TodoResource;
 
 class TodoController extends Controller
 {
+    public function index(Todo $todo) {
+      return new TodoResource($todo);
+    }
+
+
     public function store(Request $request) {
       $todo = new Todo;
  

@@ -25,5 +25,6 @@ Route::get('/', function () {
 })->middleware('auth');
 
 
+Route::get('/todo/{todo}', [TodoController::class, 'index'])->middleware('auth');
 Route::post('/todo', [TodoController::class, 'store'])->middleware('auth');
 
