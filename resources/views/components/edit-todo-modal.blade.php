@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input class="form-control" type="text" placeholder="Todo" aria-label="Todo text">
+        <input class="form-control" type="text" placeholder="Todo" aria-label="Todo text" id="todo-text">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -21,6 +21,8 @@
   const saveButton = document.getElementById('save-todo');
 
   saveButton.onclick = function() {
-    axios.post('/todo');
+    axios.post('/todo', {
+      text: document.getElementById('todo-text').value,
+    });
   }
 </script>
