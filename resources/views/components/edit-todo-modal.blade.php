@@ -1,8 +1,8 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit-todo-modal" tabindex="-1" aria-labelledby="editTodoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Todo</h1>
+        <h1 class="modal-title fs-5">Edit Todo</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -20,9 +20,16 @@
 <script>
   const saveButton = document.getElementById('save-todo');
 
-  saveButton.onclick = function() {
-    axios.post('/todo', {
+  saveButton.onclick = async function() {
+    const { data } = await axios.post('/todo', {
       text: document.getElementById('todo-text').value,
     });
+
+    console.log('data: ', data);
+
+    window.todo.add(data.text);
+
+    const modal = new window.bootstrap.Modal('#edit-todo-modal');
+    modal.hide();
   }
 </script>
