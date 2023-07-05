@@ -10,8 +10,17 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="save-todo">Save</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  const saveButton = document.getElementById('save-todo');
+
+  saveButton.onclick = function() {
+    axios.post('/todo');
+  }
+</script>
