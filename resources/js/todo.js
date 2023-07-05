@@ -15,15 +15,16 @@ function createTodoContent(text) {
     todoContent.textContent = text;
 
     const editButton = document.createElement("button");
-    editButton.setAttribute("class", "btn btn-primary");
-    editButton.textContent = "Edit";
-    editButton.style.maxWidth = "5em";
+    editButton.setAttribute("class", "btn btn-primary edit-button");
     editButton.onclick = async (e) => {
         const todoId = e.target.closest(".card").dataset.id;
 
         const { data } = await axios.get(`/todos/${todoId}`);
         console.log("data: ", data);
     };
+    const editIcon = document.createElement("i");
+    editIcon.setAttribute("class", "bi bi-pencil");
+    editButton.append(editIcon);
 
     todoContent.append(editButton);
 
