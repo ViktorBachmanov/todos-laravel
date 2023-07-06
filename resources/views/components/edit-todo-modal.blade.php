@@ -9,6 +9,11 @@
       <div class="modal-body">
         <input class="form-control mb-3" type="text" placeholder="Todo text" aria-label="Text" id="todo-text">
 
+        <div class="mb-3">
+          <label for="todo-image" class="form-label">Изображение</label>
+          <input class="form-control" type="file" id="todo-image" accept="image/*">
+        </div>
+
         <div>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Tag" id="todo-tag-input" aria-label="Todo's tag" aria-describedby="add-tag-button">
