@@ -37,7 +37,7 @@
   const todoTagInput = document.getElementById('todo-tag-input');
   const tagsContainer = document.getElementById('tags-container');
   addTagButton.onclick = () => {
-    tagsContainer.append(window.todo.createTagBadge(todoTagInput.value));
+    tagsContainer.append(window.todo.createTagBadge(todoTagInput.value, true));
     todoTagInput.value = '';
   }
 
@@ -60,6 +60,7 @@
         detail: {
             todoId,
             text: data.text,
+            tags: data.tags,
         },
     });
 
@@ -70,6 +71,9 @@
 
   function editTodo(e) {
     todoTextEl.value = e.detail.text;
+    e.detail.tags.forEach(tag => {
+      tagsContainer.append(window.todo.createTagBadge(tag, true))
+    });
 
     saveButton.onclick = () => {
       saveCorrectedTodo(e.detail.todoId);
