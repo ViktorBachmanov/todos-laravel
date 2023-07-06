@@ -38,6 +38,8 @@
 
   const todoTextEl = document.getElementById('todo-text');
 
+  const todoFileInput = document.getElementById("todo-image");
+
   const addTagButton = document.getElementById('add-tag-button');
   const todoTagInput = document.getElementById('todo-tag-input');
   const tagsContainer = document.getElementById('tags-container');
@@ -103,9 +105,16 @@
 
 
   async function saveNewTodo() {
-    const { data } = await axios.post('/todos', {
+    // const formData = new FormData();
+    // formData.append('text', todoTextEl.value);
+    // formData.append('tags', getTags());
+    // formData.append('image', todoFileInput.files[0]);
+    // const { data } = await axios.post('/todos', formData);
+
+    const { data } = await axios.postForm('/todos', {
       text: todoTextEl.value,
       tags: getTags(),
+      image: todoFileInput.files[0],
     });
 
     console.log('data: ', data);

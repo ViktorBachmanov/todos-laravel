@@ -37,7 +37,13 @@ class TodoController extends Controller
 
       $todo->save();
 
-      $this->createTags($todo, $request->tags);
+      if ($request->filled('tags')) {
+        $this->createTags($todo, $request->tags);
+      }
+
+      if ($request->hasFile('image')) {
+        $path = $request->image->store('public');
+      }
 
       return new TodoResource($todo);
     }
@@ -46,13 +52,15 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo) {
       $todo->text = $request->text;
 
-      $tags = $request->tags;
+      if ($request->filled('tags')) {
+        $tags = $request->tags;
 
-      DB::transaction(function () use($todo, $tags) {
-        $todo->tags()->delete();
+        DB::transaction(function () use($todo, $tags) {
+          $todo->tags()->delete();
 
-        $this->createTags($todo, $tags);
-      });
+          $this->createTags($todo, $tags);
+        });
+      }
  
       $todo->save();
 
@@ -60,10 +68,6 @@ class TodoController extends Controller
     }
 
     private function createTags(Todo $todo, array $tags) {
-      if(!count($tags)) {
-        return;
-      }
-
       $tags = array_map(function($tag) {
         return ['text' => $tag];
       }, $tags);
