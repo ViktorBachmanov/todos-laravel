@@ -1,4 +1,4 @@
-<div class="card" data-id="{{ $todo->id }}">
+<div class="card todo-card" data-id="{{ $todo->id }}">
   <div class="todo-content">
     <div class="todo-content__image"></div>
     <div>

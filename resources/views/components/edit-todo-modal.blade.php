@@ -84,7 +84,8 @@
 
     console.log('data: ', data);
 
-    window.todo.add(data);
+    // window.todo.add(data);
+    window.todo.createCard(data);
 
     $editTodoModal.modal("hide");
   }
@@ -96,7 +97,7 @@
 
     console.log('data: ', data);
 
-    // window.todo.replaceContent(data);
+    window.todo.replaceContent(data);
 
     $editTodoModal.modal("hide");
   }

@@ -1,15 +1,15 @@
-function createTodoCard(data) {
+function createCard(data) {
     const todoCard = document.createElement("div");
-    todoCard.classList.add("card");
+    todoCard.setAttribute("class", "card todo-card");
     todoCard.dataset.id = data.id;
 
-    todoCard.append(createTodoContent(data.text));
+    todoCard.append(createContent(data.text));
 
     const todos = document.getElementById("todos");
     todos.append(todoCard);
 }
 
-function createTodoContent(text) {
+function createContent(text) {
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
 
@@ -33,4 +33,13 @@ function createTodoContent(text) {
     return todoContent;
 }
 
-module.exports.add = createTodoCard;
+function replaceContent(data) {
+    console.log("replaceTodoContent");
+
+    const todoCard = document.querySelector(`.todo-card[data-id="${data.id}"]`);
+    todoCard.innerHTML = "";
+    todoCard.append(createContent(data.text));
+}
+
+// module.exports.add = createTodoCard;
+module.exports = { createCard, replaceContent };
