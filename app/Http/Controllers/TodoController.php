@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Todo;
 use App\Models\User;
+use App\Models\Image;
 
 use App\Http\Resources\TodoResource;
 
@@ -45,19 +46,23 @@ class TodoController extends Controller
       }
 
       if ($request->hasFile('image')) {
-        // $path = $request->image->store('public');
-        // $path = Storage::putFile('public', $request->image);
         $path = Storage::disk('public')->putFile('', $request->image);
 
-        $todo->fullImage()->create([
+        Image::create([
           'path' => $path,
-          'size_id' => 2
+          'size_id' => 2,
+          'todo_id' => $todo->id
         ]);
 
         $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
 
-        // $path = Storage::putFile('public', new File($tmpImgPath));
         $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
+
+        Image::create([
+          'path' => $path,
+          'size_id' => 1,
+          'todo_id' => $todo->id
+        ]);
 
       }
 

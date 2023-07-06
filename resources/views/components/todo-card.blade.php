@@ -1,6 +1,18 @@
+@php 
+  $previewImage = $todo->getPreviewImage();
+  $fullImage = $todo->getFullImage();
+@endphp
+
 <div class="card todo-card" data-id="{{ $todo->id }}">
   <div class="todo-content">
-    <div class="todo-content__image"></div>
+    @if($previewImage && $fullImage)
+      <a href="/storage/{{ $fullImage->path }}" target="_blank">
+        <img src="/storage/{{ $previewImage->path }}" alt="Todo image" class="todo-content__image">
+      </a>
+    @else
+      <div class="todo-content__image"></div>
+    @endif
+
     <div>
       {{ $todo->text }}
     </div>

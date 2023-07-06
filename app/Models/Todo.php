@@ -21,20 +21,27 @@ class Todo extends Model
         return $this->hasMany(Tag::class);
     }
 
+    /**
+     * Get the images for the todo.
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 
     /**
      * Get the preview image for the todo.
      */
-    public function previewImage()
+    public function getPreviewImage()
     {
-        return $this->hasMany(Image::class)->where('size_id', 1);
+        return $this->images()->firstWhere('size_id', 1);
     }
 
     /**
      * Get the full image for the todo.
      */
-    public function fullImage()
+    public function getFullImage()
     {
-        return $this->hasMany(Image::class)->where('size_id', 2);
+        return $this->images()->firstWhere('size_id', 2);
     }
 }
