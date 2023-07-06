@@ -36,4 +36,13 @@ class TodoController extends Controller
 
       return new TodoResource($todo);
     }
+
+
+    public function update(Request $request, Todo $todo) {
+      $todo->text = $request->text;
+ 
+      $todo->save();
+
+      return new TodoResource($todo);
+    }
 }

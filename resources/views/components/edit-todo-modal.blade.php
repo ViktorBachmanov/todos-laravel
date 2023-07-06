@@ -21,19 +21,9 @@
   const editTodoModal = document.getElementById('edit-todo-modal');
   const $editTodoModal = $("#edit-todo-modal");
 
+  const todoTextEl = document.getElementById('todo-text');
+
   const saveButton = document.getElementById('save-todo');
-
-  saveButton.onclick = async function() {
-    const { data } = await axios.post('/todos', {
-      text: document.getElementById('todo-text').value,
-    });
-
-    console.log('data: ', data);
-
-    window.todo.add(data);
-
-    $editTodoModal.modal("hide");
-  }
 
   const todosContainer = document.getElementById('todos');
   todosContainer.addEventListener('click', async function(e) {
@@ -50,6 +40,7 @@
 
     const editTodoEvent = new CustomEvent("edit-todo", {
         detail: {
+            todoId,
             text: data.text,
         },
     });
@@ -60,8 +51,11 @@
   editTodoModal.addEventListener('edit-todo', editTodo);
 
   function editTodo(e) {
-    const todoTextEl = document.getElementById('todo-text');
     todoTextEl.value = e.detail.text;
+
+    saveButton.onclick = () => {
+      saveCorrectedTodo(e.detail.todoId);
+    }
 
     $editTodoModal.modal("show");
   }
@@ -75,9 +69,35 @@
   editTodoModal.addEventListener('new-todo', newTodo);
 
   function newTodo(e) {
-    const todoTextEl = document.getElementById('todo-text');
     todoTextEl.value = '';
 
+    saveButton.onclick = saveNewTodo;
+
     $editTodoModal.modal("show");
+  }
+
+
+  async function saveNewTodo() {
+    const { data } = await axios.post('/todos', {
+      text: todoTextEl.value,
+    });
+
+    console.log('data: ', data);
+
+    window.todo.add(data);
+
+    $editTodoModal.modal("hide");
+  }
+
+  async function saveCorrectedTodo(todoId) {
+    const { data } = await axios.patch(`/todos/${todoId}`, {
+      text: todoTextEl.value,
+    });
+
+    console.log('data: ', data);
+
+    // window.todo.replaceContent(data);
+
+    $editTodoModal.modal("hide");
   }
 </script>
