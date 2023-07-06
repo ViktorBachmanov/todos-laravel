@@ -5,17 +5,17 @@
 
 <div class="card todo-card" data-id="{{ $todo->id }}">
   <div class="todo-content">
+    <div>
+      {{ $todo->text }}
+    </div>
+
     @if($previewImage && $fullImage)
       <a href="/storage/{{ $fullImage->path }}" target="_blank">
         <img src="/storage/{{ $previewImage->path }}" alt="Todo image" class="todo-content__image">
       </a>
-    @else
-      <div class="todo-content__image"></div>
+    {{-- @else
+      <div class="todo-content__image"></div> --}}
     @endif
-
-    <div>
-      {{ $todo->text }}
-    </div>
 
     <div class="todo-card__tags">
       @foreach($todo->tags as $tag)

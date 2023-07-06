@@ -9,9 +9,11 @@
       <div class="modal-body">
         <input class="form-control mb-3" type="text" placeholder="Todo text" aria-label="Text" id="todo-text">
 
+        <div id="todo-image"></div>
+
         <div class="mb-3">
-          <label for="todo-image" class="form-label">Изображение</label>
-          <input class="form-control" type="file" id="todo-image" accept="image/*">
+          <label for="todo-image-input" class="form-label">Изображение</label>
+          <input class="form-control" type="file" id="todo-image-input" accept="image/*">
         </div>
 
         <div>
@@ -38,7 +40,8 @@
 
   const todoTextEl = document.getElementById('todo-text');
 
-  const todoFileInput = document.getElementById("todo-image");
+  const todoImageContainer = document.getElementById("todo-image");
+  const todoFileInput = document.getElementById("todo-image-input");
 
   const addTagButton = document.getElementById('add-tag-button');
   const todoTagInput = document.getElementById('todo-tag-input');
@@ -68,6 +71,7 @@
             todoId,
             text: data.text,
             tags: data.tags,
+            previewImage: data.previewImage
         },
     });
 
@@ -81,6 +85,12 @@
     e.detail.tags.forEach(tag => {
       tagsContainer.append(window.todo.createTagBadge(tag, true))
     });
+
+    if(e.detail.previewImage) {
+      const todoImage = document.createElement('img');
+      todoImage.src = `/storage/${e.detail.previewImage.path}`;
+      todoImageContainer.append(todoImage);
+    }
 
     saveButton.onclick = () => {
       saveCorrectedTodo(e.detail.todoId);
@@ -105,12 +115,6 @@
 
 
   async function saveNewTodo() {
-    // const formData = new FormData();
-    // formData.append('text', todoTextEl.value);
-    // formData.append('tags', getTags());
-    // formData.append('image', todoFileInput.files[0]);
-    // const { data } = await axios.post('/todos', formData);
-
     const { data } = await axios.postForm('/todos', {
       text: todoTextEl.value,
       tags: getTags(),
@@ -119,7 +123,6 @@
 
     console.log('data: ', data);
 
-    // window.todo.add(data);
     window.todo.createCard(data);
 
     $editTodoModal.modal("hide");
@@ -150,5 +153,6 @@
   editTodoModal.addEventListener('hidden.bs.modal', event => {
     todoTextEl.value = '';
     tagsContainer.innerHTML = '';
+    todoImageContainer.innerHTML = '';
   })
 </script>

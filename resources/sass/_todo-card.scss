@@ -7,9 +7,6 @@ $imageSize: 150px;
 .todo-content__image {
   min-width: $imageSize;
   min-height: $imageSize;
-  max-width: $imageSize;
-  max-height: $imageSize;
-  border: 1px solid magenta;
 }
 
 i.bi.bi-pencil {

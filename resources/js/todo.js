@@ -13,13 +13,24 @@ function createContent(data) {
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
 
-    const todoImage = document.createElement("div");
-    todoImage.classList.add("todo-content__image");
-    todoContent.append(todoImage);
-
     const todoText = document.createElement("div");
     todoText.textContent = data.text;
     todoContent.append(todoText);
+
+    // const todoImage = document.createElement("div");
+    // todoImage.classList.add("todo-content__image");
+    // todoContent.append(todoImage);
+    if (data.previewImage && data.fullImage) {
+        const todoImage = document.createElement("img");
+        todoImage.classList.add("todo-content__image");
+        todoImage.src = `/storage/${data.previewImage.path}`;
+        const todoImageAnchor = document.createElement("a");
+        todoImageAnchor.setAttribute("target", "_blank");
+        todoImageAnchor.href = `/storage/${data.fullImage.path}`;
+        todoImageAnchor.append(todoImage);
+
+        todoContent.append(todoImageAnchor);
+    }
 
     const tagsContainer = document.createElement("div");
     tagsContainer.setAttribute("class", "todo-card__tags");
