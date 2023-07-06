@@ -27,7 +27,7 @@ class Todo extends Model
      */
     public function previewImage()
     {
-        return $this->hasOne(Image::class)->ofMany(['size_id' => 1]);
+        return $this->hasMany(Image::class)->where('size_id', 1);
     }
 
     /**
@@ -35,6 +35,6 @@ class Todo extends Model
      */
     public function fullImage()
     {
-        return $this->hasOne(Image::class)->ofMany(['size_id' => 2]);
+        return $this->hasMany(Image::class)->where('size_id', 2);
     }
 }

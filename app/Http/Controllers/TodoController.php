@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\DB;
-
 
 use App\Models\Todo;
 use App\Models\User;
 
 use App\Http\Resources\TodoResource;
+
+use function App\Util\createPreviewImage;
 
 
 class TodoController extends Controller
@@ -42,7 +45,20 @@ class TodoController extends Controller
       }
 
       if ($request->hasFile('image')) {
-        $path = $request->image->store('public');
+        // $path = $request->image->store('public');
+        // $path = Storage::putFile('public', $request->image);
+        $path = Storage::disk('public')->putFile('', $request->image);
+
+        $todo->fullImage()->create([
+          'path' => $path,
+          'size_id' => 2
+        ]);
+
+        $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
+
+        // $path = Storage::putFile('public', new File($tmpImgPath));
+        $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
+
       }
 
       return new TodoResource($todo);
