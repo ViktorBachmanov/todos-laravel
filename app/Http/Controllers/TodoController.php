@@ -24,14 +24,24 @@ class TodoController extends Controller
       return new TodoResource($todo);
     }
 
-
+    /**
+     * Store the new Todo.
+     */
     public function store(Request $request) {
       $todo = new Todo;
  
       $todo->text = $request->text;
       $todo->user_id = Auth::id();
- 
+
       $todo->save();
+
+      if(count($request->tags)) {
+        $tags = array_map(function($tag) {
+          return ['text' => $tag];
+        }, $request->tags);
+
+        $todo->tags()->createMany($tags);
+      }
 
 
       return new TodoResource($todo);
