@@ -5,9 +5,19 @@
         <h1 class="modal-title fs-5">Edit Todo</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
-        <input class="form-control" type="text" placeholder="Todo" aria-label="Todo text" id="todo-text">
+        <input class="form-control mb-3" type="text" placeholder="Todo text" aria-label="Text" id="todo-text">
+
+        <div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Tag" id="todo-tag-input" aria-label="Todo's tag" aria-describedby="add-tag-button">
+            <button class="btn btn-outline-secondary" type="button" id="add-tag-button">Add tag</button>
+          </div>
+          <div id="tags-container"></div>
+        </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="save-todo">Save</button>
@@ -22,6 +32,14 @@
   const $editTodoModal = $("#edit-todo-modal");
 
   const todoTextEl = document.getElementById('todo-text');
+
+  const addTagButton = document.getElementById('add-tag-button');
+  const todoTagInput = document.getElementById('todo-tag-input');
+  const tagsContainer = document.getElementById('tags-container');
+  addTagButton.onclick = () => {
+    tagsContainer.append(window.todo.createTagBadge(todoTagInput.value));
+    todoTagInput.value = '';
+  }
 
   const saveButton = document.getElementById('save-todo');
 
@@ -69,8 +87,6 @@
   editTodoModal.addEventListener('new-todo', newTodo);
 
   function newTodo(e) {
-    todoTextEl.value = '';
-
     saveButton.onclick = saveNewTodo;
 
     $editTodoModal.modal("show");
@@ -101,4 +117,9 @@
 
     $editTodoModal.modal("hide");
   }
+
+  editTodoModal.addEventListener('hidden.bs.modal', event => {
+    todoTextEl.value = '';
+    tagsContainer.innerHTML = '';
+  })
 </script>

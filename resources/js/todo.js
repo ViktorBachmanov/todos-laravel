@@ -41,5 +41,23 @@ function replaceContent(data) {
     todoCard.append(createContent(data.text));
 }
 
+function createTagBadge(text) {
+    const badge = document.createElement("span");
+    badge.setAttribute("class", "badge rounded-pill text-bg-secondary mx-1");
+    // badge.textContent = text;
+    const badgeText = document.createElement("span");
+    badgeText.textContent = text;
+    badgeText.setAttribute("class", "fs-6 me-1");
+    badge.append(badgeText);
+
+    const closeButton = document.createElement("button");
+    closeButton.setAttribute("class", "btn-close");
+    closeButton.setAttribute("aria-label", "Remove tag");
+    closeButton.onclick = () => badge.remove();
+    badge.append(closeButton);
+
+    return badge;
+}
+
 // module.exports.add = createTodoCard;
-module.exports = { createCard, replaceContent };
+module.exports = { createCard, replaceContent, createTagBadge };
