@@ -3,13 +3,13 @@ function createCard(data) {
     todoCard.setAttribute("class", "card todo-card");
     todoCard.dataset.id = data.id;
 
-    todoCard.append(createContent(data.text));
+    todoCard.append(createContent(data));
 
     const todos = document.getElementById("todos");
     todos.append(todoCard);
 }
 
-function createContent(text) {
+function createContent(data) {
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
 
@@ -18,8 +18,15 @@ function createContent(text) {
     todoContent.append(todoImage);
 
     const todoText = document.createElement("div");
-    todoText.textContent = text;
+    todoText.textContent = data.text;
     todoContent.append(todoText);
+
+    const tagsContainer = document.createElement("div");
+    tagsContainer.setAttribute("class", "todo-card__tags");
+    data.tags.forEach((tag) => {
+        tagsContainer.append(createTagBadge(tag));
+    });
+    todoContent.append(tagsContainer);
 
     const editButton = document.createElement("button");
     editButton.setAttribute("class", "btn btn-primary edit-button");
@@ -38,7 +45,7 @@ function replaceContent(data) {
 
     const todoCard = document.querySelector(`.todo-card[data-id="${data.id}"]`);
     todoCard.innerHTML = "";
-    todoCard.append(createContent(data.text));
+    todoCard.append(createContent(data));
 }
 
 function createTagBadge(text, closeButton = false) {

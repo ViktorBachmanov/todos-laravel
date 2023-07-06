@@ -114,6 +114,7 @@
   async function saveCorrectedTodo(todoId) {
     const { data } = await axios.patch(`/todos/${todoId}`, {
       text: todoTextEl.value,
+      tags: getTags(),
     });
 
     console.log('data: ', data);
