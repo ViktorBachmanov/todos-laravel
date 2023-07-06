@@ -11,3 +11,7 @@ $imageSize: 150px;
   max-height: $imageSize;
   border: 1px solid magenta;
 }
+
+i.bi.bi-pencil {
+  pointer-events: none;
+}
