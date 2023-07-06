@@ -96,6 +96,7 @@
   async function saveNewTodo() {
     const { data } = await axios.post('/todos', {
       text: todoTextEl.value,
+      tags: getTags(),
     });
 
     console.log('data: ', data);
@@ -116,6 +117,15 @@
     window.todo.replaceContent(data);
 
     $editTodoModal.modal("hide");
+  }
+
+  function getTags() {
+    const tagsArray = [];
+    editTodoModal.querySelectorAll('.tag-text').forEach(tagText => {
+      tagsArray.push(tagText.textContent);
+    });
+
+    return tagsArray;
   }
 
   editTodoModal.addEventListener('hidden.bs.modal', event => {

@@ -47,7 +47,7 @@ function createTagBadge(text) {
     // badge.textContent = text;
     const badgeText = document.createElement("span");
     badgeText.textContent = text;
-    badgeText.setAttribute("class", "fs-6 me-1");
+    badgeText.setAttribute("class", "fs-6 me-1 tag-text");
     badge.append(badgeText);
 
     const closeButton = document.createElement("button");
