@@ -1,5 +1,13 @@
 .edit-button {
   max-width: 5em;
+  align-self: flex-end;
+}
+
+.todo-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5em;
 }
 
 $imageSize: 150px;
@@ -11,4 +19,9 @@ $imageSize: 150px;
 
 i.bi.bi-pencil {
   pointer-events: none;
+}
+
+.todo-text {
+  margin: 0.5em;
+  font-size: 120%;
 }

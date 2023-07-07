@@ -5,7 +5,7 @@
 
 <div class="card todo-card" data-id="{{ $todo->id }}">
   <div class="todo-content">
-    <div>
+    <div class="todo-text">
       {{ $todo->text }}
     </div>
 

@@ -16,6 +16,7 @@ function createContent(data) {
     todoContent.classList.add("todo-content");
 
     const todoText = document.createElement("div");
+    todoText.setAttribute("class", "todo-text");
     todoText.textContent = data.text;
     todoContent.append(todoText);
 
