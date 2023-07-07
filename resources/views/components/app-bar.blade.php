@@ -13,7 +13,7 @@
       <span>
         {{ Auth::user()->name }}
       </span>
-      <button class="btn btn-secondary" onclick="axios.post('/logout'); location.reload()">
+      <button class="btn btn-secondary" id="logout-button">
         <i class="bi bi-box-arrow-right"></i>
       </button>
   </div>
@@ -26,6 +26,12 @@
 
 
 <script>
+  const logoutButton = document.getElementById('logout-button');
+  logoutButton.onclick = async () => {
+    await axios.post('/logout'); 
+    location.reload(true);
+  }
+
   const toggleThemeButton = document.getElementById('toggle-theme-button');
   toggleThemeButton.onclick = () => {
     const htmlEl = document.documentElement;
