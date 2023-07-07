@@ -102,6 +102,9 @@ class TodoController extends Controller
           $this->createImages($image, $todo);
         });
       }
+      else {
+        $todo->images()->delete();
+      }
 
       $todo->save(); 
 

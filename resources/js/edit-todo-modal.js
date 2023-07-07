@@ -75,6 +75,13 @@ todosContainer.addEventListener("click", async function (e) {
         const todoImage = document.createElement("img");
         todoImage.src = `/storage/${data.previewImage.path}`;
         todoImageContainer.append(todoImage);
+
+        const deleteImageButton = document.createElement("button");
+        deleteImageButton.setAttribute("class", "btn btn-secondary ms-2");
+        deleteImageButton.textContent = "Delete image";
+        deleteImageButton.onclick = () => (todoImageContainer.innerHTML = "");
+
+        todoImageContainer.append(deleteImageButton);
     }
 });
 
@@ -117,4 +124,5 @@ editTodoModal.addEventListener("hidden.bs.modal", (event) => {
     tagsContainer.innerHTML = "";
     todoImageContainer.innerHTML = "";
     spinner.style.opacity = 0;
+    todoFileInput.value = "";
 });
