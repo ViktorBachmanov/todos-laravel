@@ -4,10 +4,10 @@
 
     <!-- Validation Errors -->
     @error('password')
-        <div>{{ $message }}</div>
+        <div style="color: magenta">{{ $message }}</div>
     @enderror
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="my-3">
         @csrf
 
         <!-- Email Address -->
@@ -27,9 +27,11 @@
         </div>
 
         
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary me-3">
             Войти
         </button>
+
+        <a href='/register'>Зарегистрироваться</a>
     </form>
 
   </div>

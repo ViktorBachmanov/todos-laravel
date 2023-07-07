@@ -1,55 +1,51 @@
 <x-layout>
 
-  <!-- Validation Errors -->
-  @error('password')
-      <div>{{ $message }}</div>
-  @enderror
+  <div class="container">
+    <!-- Validation Errors -->
+    @error('password')
+        <div style="color: magenta">{{ $message }}</div>
+    @enderror
 
-  <form method="POST" action="{{ route('register') }}">
-      @csrf
+    <form method="POST" action="{{ route('register') }}"  class="my-3">
+        @csrf
 
-      <!-- Name -->
-      <div>
-          <label for="name">Имя</label>
+        <!-- Name -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Имя</label>
+            <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" required autofocus />
+        </div>
 
-          <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus />
-      </div>
+        <!-- Email Address -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" type="email" name="email" class="form-control" value="{{ old('email') }}" required />
+        </div>
 
-      <!-- Email Address -->
-      <div>
-          <label for="email">Email</label>
+        <!-- Password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input id="password" 
+                    class="form-control"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+        </div>
 
-          <input id="email" type="email" name="email" value="{{ old('email') }}" required />
-      </div>
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Подтвердите пароль</label>
+            <input id="password_confirmation" 
+                    class="form-control"
+                            type="password"
+                            name="password_confirmation" required />
+        </div>
 
-      <!-- Password -->
-      <div>
-          <label for="password">Пароль</label>
+        
+        <button class="btn btn-primary">
+            Зарегистрироваться
+        </button>
+    </form>
 
-          <input id="password" 
-                          type="password"
-                          name="password"
-                          required autocomplete="new-password" />
-      </div>
-
-      <!-- Confirm Password -->
-      <div>
-          <label for="password_confirmation">Подтвердите пароль</label>
-
-          <input id="password_confirmation" 
-                          type="password"
-                          name="password_confirmation" required />
-      </div>
-
-      <div>
-          <a href="{{ route('login') }}">
-              Уже зарегистрированы?
-          </a>
-
-          <button>
-              Зарегистрироваться
-          </button>
-      </div>
-  </form>
+  </div>
    
 </x-layout>

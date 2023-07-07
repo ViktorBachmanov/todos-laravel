@@ -1,4 +1,5 @@
 <div class="navbar navbar-expand-lg bg-body-tertiary">
+@auth
   <div style="display: flex; align-items: center; column-gap: 2em">
     <button class="btn btn-primary" aria-label="New Todo" id="new-todo-button">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -11,4 +12,12 @@
       <button class="btn btn-outline-secondary" type="button" id="filter-tags-button">Filter</button>
     </div>
   </div>
+
+  <div>
+    {{ Auth::user()->name }}
+    <button class="btn btn-secondary" onclick="axios.post('/logout'); location.reload()">
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
+  </div>
+@endauth
 </div>
