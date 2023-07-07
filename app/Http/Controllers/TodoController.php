@@ -40,7 +40,9 @@ class TodoController extends Controller
 
       $todos = [];
       $foundTags->each(function ($foundTag) use(&$todos) {
-        $todos[] = $foundTag->todo;
+        if($foundTag->todo->user_id === Auth::id()) {
+         $todos[] = $foundTag->todo;
+        }
       });
 
       return TodoResource::collection($todos);
