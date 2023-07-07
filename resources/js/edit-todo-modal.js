@@ -1,3 +1,5 @@
+import { createCard, createTagBadge } from "./todo-card.js";
+
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");
 
@@ -10,7 +12,7 @@ const addTagButton = document.getElementById("add-tag-button");
 const todoTagInput = document.getElementById("todo-tag-input");
 const tagsContainer = document.getElementById("tags-container");
 addTagButton.onclick = () => {
-    tagsContainer.append(window.todo.createTagBadge(todoTagInput.value, true));
+    tagsContainer.append(createTagBadge(todoTagInput.value, true));
     todoTagInput.value = "";
 };
 
@@ -46,7 +48,7 @@ editTodoModal.addEventListener("edit-todo", editTodo);
 function editTodo(e) {
     todoTextEl.value = e.detail.text;
     e.detail.tags.forEach((tag) => {
-        tagsContainer.append(window.todo.createTagBadge(tag, true));
+        tagsContainer.append(createTagBadge(tag, true));
     });
 
     if (e.detail.previewImage) {
@@ -84,7 +86,7 @@ async function saveNewTodo() {
 
     console.log("data: ", data);
 
-    window.todo.createCard(data);
+    createCard(data);
 
     $editTodoModal.modal("hide");
 }

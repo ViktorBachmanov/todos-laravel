@@ -17,9 +17,6 @@ function createContent(data) {
     todoText.textContent = data.text;
     todoContent.append(todoText);
 
-    // const todoImage = document.createElement("div");
-    // todoImage.classList.add("todo-content__image");
-    // todoContent.append(todoImage);
     if (data.previewImage && data.fullImage) {
         const todoImage = document.createElement("img");
         todoImage.classList.add("todo-content__image");
@@ -62,7 +59,6 @@ function replaceContent(data) {
 function createTagBadge(text, closeButton = false) {
     const badge = document.createElement("span");
     badge.setAttribute("class", "badge rounded-pill text-bg-secondary mx-1");
-    // badge.textContent = text;
     const badgeText = document.createElement("span");
     badgeText.textContent = text;
     badgeText.setAttribute("class", "fs-6 tag-text");
@@ -79,5 +75,4 @@ function createTagBadge(text, closeButton = false) {
     return badge;
 }
 
-// module.exports.add = createTodoCard;
-module.exports = { createCard, replaceContent, createTagBadge };
+export { createCard, createTagBadge };

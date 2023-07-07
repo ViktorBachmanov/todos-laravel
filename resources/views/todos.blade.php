@@ -7,5 +7,5 @@
 
   <x-edit-todo-modal />
 
-  <script src="{{ mix('/js/edit-todo-modal.js') }}"></script>
+  <script type="module" src="{{ mix('/js/edit-todo-modal.js') }}"></script>
 </x-layout>
