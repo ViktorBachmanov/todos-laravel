@@ -32,6 +32,11 @@ newTodoButton.onclick = () => {
 };
 
 async function saveNewTodo() {
+    if (todoTextEl.value === "") {
+        todoTextEl.classList.add("is-invalid");
+        return;
+    }
+
     spinner.style.opacity = 1;
 
     const { data } = await axios.postForm("/todos", createPostBody());
@@ -88,6 +93,11 @@ todosContainer.addEventListener("click", async function (e) {
 });
 
 async function saveCorrectedTodo(todoId) {
+    if (todoTextEl.value === "") {
+        todoTextEl.classList.add("is-invalid");
+        return;
+    }
+
     spinner.style.opacity = 1;
 
     const { data } = await axios.postForm(`/todos/${todoId}`, {
@@ -127,4 +137,5 @@ editTodoModal.addEventListener("hidden.bs.modal", (event) => {
     todoImageContainer.innerHTML = "";
     spinner.style.opacity = 0;
     todoFileInput.value = "";
+    todoTextEl.classList.remove("is-invalid");
 });
