@@ -27,9 +27,11 @@
 
 <script>
   const logoutButton = document.getElementById('logout-button');
-  logoutButton.onclick = async () => {
-    await axios.post('/logout'); 
-    location.reload(true);
+  if(logoutButton) {
+    logoutButton.onclick = async () => {
+      await axios.post('/logout'); 
+      location.reload(true);
+    }
   }
 
   const toggleThemeButton = document.getElementById('toggle-theme-button');
