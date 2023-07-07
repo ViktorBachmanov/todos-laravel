@@ -33,7 +33,6 @@ class TodoController extends Controller
      * Show the filtered Todos.
      */
     public function getFilteredTodos(Request $request) {
-      // $tags = $request->query('tags');
       $tags = $request->tags;
 
       $foundTags = Tag::whereIn('text', $tags);
@@ -71,26 +70,7 @@ class TodoController extends Controller
       }
 
       if ($request->hasFile('image')) {
-        // $path = Storage::disk('public')->putFile('', $request->image);
-
-        // Image::create([
-        //   'path' => $path,
-        //   'size_id' => 2,
-        //   'todo_id' => $todo->id
-        // ]);
-
-        // $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
-
-        // $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
-
-        // Image::create([
-        //   'path' => $path,
-        //   'size_id' => 1,
-        //   'todo_id' => $todo->id
-        // ]);
-
         $this->createImages($request->image, $todo);
-
       }
 
       return new TodoResource($todo);
@@ -122,7 +102,7 @@ class TodoController extends Controller
           $this->createImages($image, $todo);
         });
       }
-      else {
+      else if ($request->delete_image) {
         $todo->images()->delete();
       }
 

@@ -5,9 +5,6 @@ function createCard(data) {
 
     todoCard.append(createContent(data));
 
-    // const todos = document.getElementById("todos");
-    // todos.append(todoCard);
-
     return todoCard;
 }
 
@@ -52,8 +49,6 @@ function createContent(data) {
 }
 
 function replaceContent(data) {
-    console.log("replaceTodoContent");
-
     const todoCard = document.querySelector(`.todo-card[data-id="${data.id}"]`);
     todoCard.innerHTML = "";
     todoCard.append(createContent(data));

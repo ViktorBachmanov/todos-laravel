@@ -41,8 +41,6 @@ async function saveNewTodo() {
 
     const { data } = await axios.postForm("/todos", createPostBody());
 
-    console.log("data: ", data);
-
     todos.append(createCard(data));
 
     $editTodoModal.modal("hide");
@@ -52,8 +50,6 @@ async function saveNewTodo() {
 
 const todosContainer = document.getElementById("todos");
 todosContainer.addEventListener("click", async function (e) {
-    console.log("target: ", e.target);
-
     if (!e.target.classList.contains("edit-button")) {
         return;
     }
@@ -70,8 +66,6 @@ todosContainer.addEventListener("click", async function (e) {
     const { data } = await axios.get(`/todos/${todoId}`);
 
     spinner.style.opacity = 0;
-
-    console.log("data: ", data);
 
     todoTextEl.value = data.text;
     data.tags.forEach((tag) => {
@@ -103,9 +97,8 @@ async function saveCorrectedTodo(todoId) {
     const { data } = await axios.postForm(`/todos/${todoId}`, {
         ...createPostBody(),
         _method: "PATCH",
+        delete_image: todoImageContainer.innerHTML === "" ? true : null,
     });
-
-    console.log("data: ", data);
 
     replaceContent(data);
 

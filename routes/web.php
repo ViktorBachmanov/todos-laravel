@@ -16,14 +16,10 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/', [TodoController::class, 'index'])->middleware('auth');
 
 
-// Route::get('/todos', [TodoController::class, 'getFilteredTodos'])->middleware('auth');
 Route::post('/get-filtered-todos', [TodoController::class, 'getFilteredTodos'])->middleware('auth');
 Route::get('/todos/{todo}', [TodoController::class, 'show'])->middleware('auth');
 Route::post('/todos', [TodoController::class, 'store'])->middleware('auth');
