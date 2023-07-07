@@ -5,6 +5,8 @@ const $editTodoModal = $("#edit-todo-modal");
 
 const spinner = document.getElementById("edit-todo-modal-spinner");
 
+const todos = document.getElementById("todos");
+
 const todoTextEl = document.getElementById("todo-text");
 
 const todoImageContainer = document.getElementById("todo-image");
@@ -36,7 +38,7 @@ async function saveNewTodo() {
 
     console.log("data: ", data);
 
-    createCard(data);
+    todos.append(createCard(data));
 
     $editTodoModal.modal("hide");
 }

@@ -14,6 +14,7 @@ const mix = require("laravel-mix");
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/todo-card.js", "public/js")
     .js("resources/js/edit-todo-modal.js", "public/js")
+    .js("resources/js/tags-filter.js", "public/js")
     .sourceMaps()
     // .postCss("resources/css/app.css", "public/css", [
     //     //

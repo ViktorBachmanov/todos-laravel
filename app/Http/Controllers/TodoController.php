@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Todo;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Tag;
 
 use App\Http\Resources\TodoResource;
 
@@ -27,6 +28,25 @@ class TodoController extends Controller
     public function index() {
       return view('todos', ['todos' => Auth::user()->todos]);
     }
+
+    /**
+     * Show the filtered Todos.
+     */
+    public function getFilteredTodos(Request $request) {
+      // $tags = $request->query('tags');
+      $tags = $request->tags;
+
+      $foundTags = Tag::whereIn('text', $tags);
+
+
+      $todos = [];
+      $foundTags->each(function ($foundTag) use(&$todos) {
+        $todos[] = $foundTag->todo;
+      });
+
+      return TodoResource::collection($todos);
+    }
+    
 
     /**
      * Get the Todo resource.
