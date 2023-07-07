@@ -29,6 +29,12 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="save-todo">Save</button>
       </div>
+
+      <div id="edit-todo-modal-spinner">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

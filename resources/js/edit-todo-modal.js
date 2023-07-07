@@ -3,6 +3,8 @@ import { createCard, createTagBadge } from "./todo-card.js";
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");
 
+const spinner = document.getElementById("edit-todo-modal-spinner");
+
 const todoTextEl = document.getElementById("todo-text");
 
 const todoImageContainer = document.getElementById("todo-image");
@@ -18,66 +20,18 @@ addTagButton.onclick = () => {
 
 const saveButton = document.getElementById("save-todo");
 
-const todosContainer = document.getElementById("todos");
-todosContainer.addEventListener("click", async function (e) {
-    console.log("target: ", e.target);
-
-    if (!e.target.classList.contains("edit-button")) {
-        return;
-    }
-
-    const todoId = e.target.closest(".card").dataset.id;
-
-    const { data } = await axios.get(`/todos/${todoId}`);
-    console.log("data: ", data);
-
-    const editTodoEvent = new CustomEvent("edit-todo", {
-        detail: {
-            todoId,
-            text: data.text,
-            tags: data.tags,
-            previewImage: data.previewImage,
-        },
-    });
-
-    editTodoModal.dispatchEvent(editTodoEvent);
-});
-
-editTodoModal.addEventListener("edit-todo", editTodo);
-
-function editTodo(e) {
-    todoTextEl.value = e.detail.text;
-    e.detail.tags.forEach((tag) => {
-        tagsContainer.append(createTagBadge(tag, true));
-    });
-
-    if (e.detail.previewImage) {
-        const todoImage = document.createElement("img");
-        todoImage.src = `/storage/${e.detail.previewImage.path}`;
-        todoImageContainer.append(todoImage);
-    }
-
-    saveButton.onclick = () => {
-        saveCorrectedTodo(e.detail.todoId);
-    };
-
-    $editTodoModal.modal("show");
-}
+//================== New Todo =================================
 
 const newTodoButton = document.getElementById("new-todo-button");
 newTodoButton.onclick = () => {
-    editTodoModal.dispatchEvent(new CustomEvent("new-todo"));
-};
-
-editTodoModal.addEventListener("new-todo", newTodo);
-
-function newTodo(e) {
     saveButton.onclick = saveNewTodo;
 
     $editTodoModal.modal("show");
-}
+};
 
 async function saveNewTodo() {
+    spinner.style.opacity = 1;
+
     const { data } = await axios.postForm("/todos", {
         text: todoTextEl.value,
         tags: getTags(),
@@ -91,7 +45,46 @@ async function saveNewTodo() {
     $editTodoModal.modal("hide");
 }
 
+//================== Edit Todo ==================================
+
+const todosContainer = document.getElementById("todos");
+todosContainer.addEventListener("click", async function (e) {
+    console.log("target: ", e.target);
+
+    if (!e.target.classList.contains("edit-button")) {
+        return;
+    }
+
+    saveButton.onclick = () => {
+        saveCorrectedTodo(todoId);
+    };
+
+    spinner.style.opacity = 1;
+    $editTodoModal.modal("show");
+
+    const todoId = e.target.closest(".card").dataset.id;
+
+    const { data } = await axios.get(`/todos/${todoId}`);
+
+    spinner.style.opacity = 0;
+
+    console.log("data: ", data);
+
+    todoTextEl.value = data.text;
+    data.tags.forEach((tag) => {
+        tagsContainer.append(createTagBadge(tag, true));
+    });
+
+    if (data.previewImage) {
+        const todoImage = document.createElement("img");
+        todoImage.src = `/storage/${data.previewImage.path}`;
+        todoImageContainer.append(todoImage);
+    }
+});
+
 async function saveCorrectedTodo(todoId) {
+    spinner.style.opacity = 1;
+
     const { data } = await axios.patch(`/todos/${todoId}`, {
         text: todoTextEl.value,
         tags: getTags(),
@@ -103,6 +96,8 @@ async function saveCorrectedTodo(todoId) {
 
     $editTodoModal.modal("hide");
 }
+
+//=======================================================
 
 function getTags() {
     const tagsArray = [];
@@ -117,4 +112,5 @@ editTodoModal.addEventListener("hidden.bs.modal", (event) => {
     todoTextEl.value = "";
     tagsContainer.innerHTML = "";
     todoImageContainer.innerHTML = "";
+    spinner.style.opacity = 0;
 });
