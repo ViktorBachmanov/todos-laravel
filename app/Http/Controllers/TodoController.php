@@ -21,11 +21,16 @@ use function App\Util\createPreviewImage;
 
 class TodoController extends Controller
 {
+    /**
+     * Show the all Todos.
+     */
     public function index() {
       return view('todos', ['todos' => Auth::user()->todos]);
     }
 
-
+    /**
+     * Get the Todo resource.
+     */
     public function show(Todo $todo) {
       return new TodoResource($todo);
     }
@@ -42,57 +47,96 @@ class TodoController extends Controller
       $todo->save();
 
       if ($request->filled('tags')) {
-        $this->createTags($todo, $request->tags);
+        $this->createTags($request->tags, $todo);
       }
 
       if ($request->hasFile('image')) {
-        $path = Storage::disk('public')->putFile('', $request->image);
+        // $path = Storage::disk('public')->putFile('', $request->image);
 
-        Image::create([
-          'path' => $path,
-          'size_id' => 2,
-          'todo_id' => $todo->id
-        ]);
+        // Image::create([
+        //   'path' => $path,
+        //   'size_id' => 2,
+        //   'todo_id' => $todo->id
+        // ]);
 
-        $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
+        // $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
 
-        $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
+        // $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
 
-        Image::create([
-          'path' => $path,
-          'size_id' => 1,
-          'todo_id' => $todo->id
-        ]);
+        // Image::create([
+        //   'path' => $path,
+        //   'size_id' => 1,
+        //   'todo_id' => $todo->id
+        // ]);
+
+        $this->createImages($request->image, $todo);
 
       }
 
       return new TodoResource($todo);
     }
 
-
+    
+    /**
+     * Update the Todo.
+     */
     public function update(Request $request, Todo $todo) {
       $todo->text = $request->text;
 
       if ($request->filled('tags')) {
         $tags = $request->tags;
 
-        DB::transaction(function () use($todo, $tags) {
+        DB::transaction(function () use ($tags, $todo) {
           $todo->tags()->delete();
 
-          $this->createTags($todo, $tags);
+          $this->createTags($tags, $todo);
         });
       }
- 
-      $todo->save();
+
+      if ($request->hasFile('image')) {
+        $image = $request->image;
+
+        DB::transaction(function () use($image, $todo) {
+          $todo->images()->delete();
+
+          $this->createImages($image, $todo);
+        });
+      }
+
+      $todo->save(); 
 
       return new TodoResource($todo);
     }
 
-    private function createTags(Todo $todo, array $tags) {
+    //========================================================
+
+    private function createTags(array $tags, Todo $todo) {
       $tags = array_map(function($tag) {
         return ['text' => $tag];
       }, $tags);
 
       $todo->tags()->createMany($tags);
+    }
+
+    //--------------------------------------------------------
+
+    private function createImages($requestImage, Todo $todo) {
+      $path = Storage::disk('public')->putFile('', $requestImage);
+
+      Image::create([
+        'path' => $path,
+        'size_id' => 2,
+        'todo_id' => $todo->id
+      ]);
+
+      $tmpImgPath = createPreviewImage(storage_path("app/public/$path"));
+
+      $path = Storage::disk('public')->putFile('', new File($tmpImgPath));
+
+      Image::create([
+        'path' => $path,
+        'size_id' => 1,
+        'todo_id' => $todo->id
+      ]);
     }
 }

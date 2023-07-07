@@ -75,4 +75,4 @@ function createTagBadge(text, closeButton = false) {
     return badge;
 }
 
-export { createCard, createTagBadge };
+export { createCard, createTagBadge, replaceContent };

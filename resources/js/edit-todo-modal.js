@@ -1,4 +1,4 @@
-import { createCard, createTagBadge } from "./todo-card.js";
+import { createCard, createTagBadge, replaceContent } from "./todo-card.js";
 
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");
@@ -32,11 +32,7 @@ newTodoButton.onclick = () => {
 async function saveNewTodo() {
     spinner.style.opacity = 1;
 
-    const { data } = await axios.postForm("/todos", {
-        text: todoTextEl.value,
-        tags: getTags(),
-        image: todoFileInput.files[0],
-    });
+    const { data } = await axios.postForm("/todos", createPostBody());
 
     console.log("data: ", data);
 
@@ -85,19 +81,27 @@ todosContainer.addEventListener("click", async function (e) {
 async function saveCorrectedTodo(todoId) {
     spinner.style.opacity = 1;
 
-    const { data } = await axios.patch(`/todos/${todoId}`, {
-        text: todoTextEl.value,
-        tags: getTags(),
+    const { data } = await axios.postForm(`/todos/${todoId}`, {
+        ...createPostBody(),
+        _method: "PATCH",
     });
 
     console.log("data: ", data);
 
-    window.todo.replaceContent(data);
+    replaceContent(data);
 
     $editTodoModal.modal("hide");
 }
 
 //=======================================================
+
+function createPostBody() {
+    return {
+        text: todoTextEl.value,
+        tags: getTags(),
+        image: todoFileInput.files[0],
+    };
+}
 
 function getTags() {
     const tagsArray = [];
