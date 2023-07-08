@@ -1,4 +1,5 @@
-import { createCard, createTagBadge, replaceContent } from "./todo-card.js";
+import { createCard, replaceContent } from "./todo-card.js";
+import { createTagBadge } from "./tag-badge";
 
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");

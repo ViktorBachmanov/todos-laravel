@@ -1,19 +1,9 @@
-import { createCard } from "./todo-card.js";
+import { createTagBadge } from "./tag-badge";
 
-const filterTagsButton = document.getElementById("filter-tags-button");
-const tagsFilterInput = document.getElementById("tags-filter-input");
-
-const todosContainer = document.getElementById("todos");
-
-filterTagsButton.onclick = async () => {
-    const tagsString = tagsFilterInput.value;
-    const tagsArr = tagsString.split(",");
-
-    const { data } = await axios.post("/get-filtered-todos", { tags: tagsArr });
-
-    todosContainer.innerHTML = "";
-
-    data.forEach((todoData) => {
-        todosContainer.append(createCard(todoData));
-    });
+const tagsContainer = document.getElementById("tags-filter-container");
+const tagsInput = document.getElementById("tags-filter-input");
+const addTagButton = document.getElementById("tags-filter-add-button");
+addTagButton.onclick = () => {
+    tagsContainer.append(createTagBadge(tagsInput.value, true));
+    tagsInput.value = "";
 };
