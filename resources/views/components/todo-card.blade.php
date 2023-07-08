@@ -23,8 +23,14 @@
       @endforeach
     </div>
 
-    <button class="btn btn-primary edit-button">
-      <i class="bi bi-pencil"></i>
-    </button>
+    <div class="todo-card__buttons">
+      <button class="btn btn-primary edit-button">
+        <i class="bi bi-pencil"></i>
+      </button>
+
+      <button class="btn btn-secondary delete-button">
+        <i class="bi bi-x-square"></i>
+      </button>
+    </div>
   </div>
 </div>
