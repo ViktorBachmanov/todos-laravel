@@ -15,6 +15,7 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/todo-card.js", "public/js")
     .js("resources/js/edit-todo-modal.js", "public/js")
     .js("resources/js/tags-filter.js", "public/js")
+    .js("resources/js/app-bar.js", "public/js")
     .sourceMaps()
     // .postCss("resources/css/app.css", "public/css", [
     //     //

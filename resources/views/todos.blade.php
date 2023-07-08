@@ -7,6 +7,6 @@
 
   <x-edit-todo-modal />
 
-  <script type="module" src="{{ mix('/js/edit-todo-modal.js') }}"></script>
+  <script src="{{ mix('/js/edit-todo-modal.js') }}"></script>
   <script src="{{ mix('/js/tags-filter.js') }}"></script>
 </x-layout>
