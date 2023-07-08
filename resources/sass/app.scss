@@ -11,7 +11,7 @@
   column-gap: 1em;
   row-gap: 1em;
   align-items: flex-start;
-  padding: 1.5em;
+  // padding: 1.5em;
 }
 
 #edit-todo-modal-spinner {
@@ -25,5 +25,9 @@
   justify-content: center;
   transition: opacity 0.5s ease;
   opacity: 0;
+  pointer-events: none;
+}
+
+i.bi {
   pointer-events: none;
 }
