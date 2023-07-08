@@ -24,4 +24,5 @@ Route::post('/get-filtered-todos', [TodoController::class, 'getFilteredTodos'])-
 Route::get('/todos/{todo}', [TodoController::class, 'show'])->middleware('auth');
 Route::post('/todos', [TodoController::class, 'store'])->middleware('auth');
 Route::patch('/todos/{todo}', [TodoController::class, 'update'])->middleware('auth');
+Route::delete('/todos/{todo}', [TodoController::class, 'destroy'])->middleware('auth');
 

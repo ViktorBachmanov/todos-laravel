@@ -113,6 +113,13 @@ class TodoController extends Controller
       return new TodoResource($todo);
     }
 
+    /**
+     *  Destroy the Todo.
+     */
+    public function destroy(Todo $todo) {
+      return $todo->delete();
+    }
+
     //========================================================
 
     private function createTags(array $tags, Todo $todo) {

@@ -48,20 +48,13 @@ async function saveNewTodo() {
 
 //================== Edit Todo ==================================
 
-const todosContainer = document.getElementById("todos");
-todosContainer.addEventListener("click", async function (e) {
-    if (!e.target.classList.contains("edit-button")) {
-        return;
-    }
-
+export async function showEditTodoModal(todoId) {
     saveButton.onclick = () => {
         saveCorrectedTodo(todoId);
     };
 
     spinner.style.opacity = 1;
     $editTodoModal.modal("show");
-
-    const todoId = e.target.closest(".card").dataset.id;
 
     const { data } = await axios.get(`/todos/${todoId}`);
 
@@ -84,7 +77,7 @@ todosContainer.addEventListener("click", async function (e) {
 
         todoImageContainer.append(deleteImageButton);
     }
-});
+}
 
 async function saveCorrectedTodo(todoId) {
     if (todoTextEl.value === "") {

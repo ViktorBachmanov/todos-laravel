@@ -73,4 +73,12 @@ function createTagBadge(text, closeButton = false) {
     return badge;
 }
 
-export { createCard, createTagBadge, replaceContent };
+async function deleteTodo(todoId) {
+    const { data } = await axios.post(`/todos/${todoId}`, {
+        _method: "DELETE",
+    });
+
+    return data;
+}
+
+export { createCard, createTagBadge, replaceContent, deleteTodo };

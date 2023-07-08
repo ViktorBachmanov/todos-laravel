@@ -9,4 +9,5 @@
 
   <script src="{{ mix('/js/edit-todo-modal.js') }}"></script>
   <script src="{{ mix('/js/tags-filter.js') }}"></script>
+  <script src="{{ mix('/js/todos.js') }}"></script>
 </x-layout>

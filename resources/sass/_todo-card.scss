@@ -6,6 +6,10 @@
   max-width: 5em;
 }
 
+i.bi {
+  pointer-events: none;
+}
+
 .todo-content {
   display: flex;
   flex-direction: column;
@@ -18,10 +22,6 @@ $imageSize: 150px;
 .todo-content__image {
   min-width: $imageSize;
   min-height: $imageSize;
-}
-
-i.bi.bi-pencil {
-  pointer-events: none;
 }
 
 .todo-text {
