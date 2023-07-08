@@ -36,6 +36,9 @@ function createContent(data) {
     });
     todoContent.append(tagsContainer);
 
+    const buttonsContainer = document.createElement("div");
+    buttonsContainer.setAttribute("class", "todo-card__buttons");
+
     const editButton = document.createElement("button");
     editButton.setAttribute("class", "btn btn-primary edit-button");
 
@@ -43,7 +46,17 @@ function createContent(data) {
     editIcon.setAttribute("class", "bi bi-pencil");
     editButton.append(editIcon);
 
-    todoContent.append(editButton);
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "btn btn-secondary delete-button");
+
+    const deleteIcon = document.createElement("i");
+    deleteIcon.setAttribute("class", "bi bi-x-square");
+    deleteButton.append(deleteIcon);
+
+    buttonsContainer.append(editButton);
+    buttonsContainer.append(deleteButton);
+
+    todoContent.append(buttonsContainer);
 
     return todoContent;
 }

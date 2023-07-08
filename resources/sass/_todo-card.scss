@@ -1,9 +1,7 @@
 .todo-card__buttons {
   align-self: flex-end;
-}
-
-.edit-button {
-  max-width: 5em;
+  display: flex;
+  column-gap: 0.5em;
 }
 
 i.bi {
