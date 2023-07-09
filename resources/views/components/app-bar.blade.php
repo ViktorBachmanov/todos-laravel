@@ -6,7 +6,7 @@
     </button>
 
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Tags filter" id="tags-filter-input" style="min-width: 20em" aria-label="Tags filter">
+      <input type="text" class="form-control" placeholder="Tags filter" id="tags-filter-input-old" style="min-width: 20em" aria-label="Tags filter">
       <button class="btn btn-outline-secondary" type="button" id="filter-tags-button">Filter</button>
     </div>
   

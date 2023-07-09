@@ -19,8 +19,6 @@ use App\Http\Controllers\TodoController;
 
 Route::get('/', [TodoController::class, 'index'])->middleware('auth');
 
-
-Route::post('/get-filtered-todos', [TodoController::class, 'getFilteredTodos'])->middleware('auth');
 Route::get('/todos/{todo}', [TodoController::class, 'show'])->middleware('auth');
 Route::post('/todos', [TodoController::class, 'store'])->middleware('auth');
 Route::patch('/todos/{todo}', [TodoController::class, 'update'])->middleware('auth');

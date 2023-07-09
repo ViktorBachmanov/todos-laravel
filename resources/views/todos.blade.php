@@ -1,8 +1,12 @@
 <x-layout>
-  <div id="todos">
-     @foreach ($todos as $todo)
-      <x-todo-card :todo="$todo" />
-     @endforeach
+  <div style="padding: 1em; display: flex; column-gap: 2em;">
+    <x-tags-filter :check="$filterTagsCheck" :tags="$filterTags" />
+
+    <div id="todos">
+      @foreach ($todos as $todo)
+        <x-todo-card :todo="$todo" />
+      @endforeach
+    </div>
   </div>
 
   <x-edit-todo-modal />

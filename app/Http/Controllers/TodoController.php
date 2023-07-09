@@ -25,27 +25,35 @@ class TodoController extends Controller
     /**
      * Show the all Todos.
      */
-    public function index() {
-      return view('todos', ['todos' => Auth::user()->todos]);
+    public function index(Request $request) {
+      $filterTagsCheck = isset($_COOKIE['filter-tags-check'])
+         ? json_decode($_COOKIE['filter-tags-check'])
+         : false;
+
+      $filterTags = isset($_COOKIE['filter-tags'])
+        ? json_decode($_COOKIE['filter-tags'])
+        : [];
+      
+      $filteredTodos = $filterTagsCheck && count($filterTags) > 0
+        ? $this->getFilteredTodos($filterTags)->unique()
+        : Auth::user()->todos;
+
+      return view('todos', [
+        'todos' => $filteredTodos,
+        'filterTagsCheck' => $filterTagsCheck,
+        'filterTags' => $filterTags,
+      ]);
     }
 
-    /**
-     * Show the filtered Todos.
-     */
-    public function getFilteredTodos(Request $request) {
-      $tags = $request->tags;
+    private function getFilteredTodos(array $filterTags) {
+      $foundTags = Tag::whereIn('text', $filterTags)->get();
 
-      $foundTags = Tag::whereIn('text', $tags);
-
-
-      $todos = [];
-      $foundTags->each(function ($foundTag) use(&$todos) {
+      return $foundTags->map(function ($foundTag) {
         if($foundTag->todo->user_id === Auth::id()) {
-         $todos[] = $foundTag->todo;
+         return $foundTag->todo;
         }
       });
 
-      return TodoResource::collection($todos);
     }
     
 

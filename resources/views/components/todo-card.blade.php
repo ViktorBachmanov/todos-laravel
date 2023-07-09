@@ -19,7 +19,7 @@
 
     <div class="todo-card__tags">
       @foreach($todo->tags as $tag)
-        <span class="badge rounded-pill text-bg-secondary mx-1"><span class="fs-6 tag-text">{{ $tag->text }}</span></span>
+        <x-tag-badge :text="$tag->text" />
       @endforeach
     </div>
 
