@@ -1,6 +1,6 @@
 <x-layout>
   <div style="padding: 1em; display: flex; column-gap: 2em;">
-    <x-tags-filter :tags="$tags" />
+    <x-tags-filter :check="$filterTagsCheck" :tags="$filterTags" />
 
     <div id="todos">
       @foreach ($todos as $todo)

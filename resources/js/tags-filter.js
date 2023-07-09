@@ -21,5 +21,19 @@ tagsContainer.addEventListener("click", (e) => {
 function updateTagsCookie() {
     const tags = getTags(tagsContainer);
 
-    document.cookie = `tags=${JSON.stringify(tags)}; path=/; samesite=lax;`;
+    document.cookie = `filter-tags=${JSON.stringify(
+        tags
+    )}; path=/; samesite=lax;`;
 }
+
+const tagsFilterHeader = document.getElementById("tags-filter-header");
+tagsFilterHeader.onclick = () => {
+    location.reload(true);
+};
+
+const tagsFilterCheck = document.getElementById("tags-filter-check");
+tagsFilterCheck.addEventListener("change", () => {
+    document.cookie = `filter-tags-check=${JSON.stringify(
+        tagsFilterCheck.checked
+    )}; path=/; samesite=lax;`;
+});

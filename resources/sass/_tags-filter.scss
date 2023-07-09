@@ -3,6 +3,13 @@
   flex: 1 0 auto
 }
 
+#tags-filter-header {
+  display: flex; 
+  align-items: center; 
+  column-gap: 0.5em;
+  font-size: 115%;
+}
+
 #tags-filter-container {
   display: flex;
   flex-wrap: wrap;

@@ -26,22 +26,27 @@ class TodoController extends Controller
      * Show the all Todos.
      */
     public function index(Request $request) {
-      $tags = isset($_COOKIE['tags'])
-        ? json_decode($_COOKIE['tags'])
-        : [];
+      $filterTagsCheck = isset($_COOKIE['filter-tags-check'])
+         ? json_decode($_COOKIE['filter-tags-check'])
+         : false;
 
-      $filteredTodos = count($tags) > 0
-        ? $this->getFilteredTodos($tags)->unique()
+      $filterTags = isset($_COOKIE['filter-tags'])
+        ? json_decode($_COOKIE['filter-tags'])
+        : [];
+      
+      $filteredTodos = $filterTagsCheck && count($filterTags) > 0
+        ? $this->getFilteredTodos($filterTags)->unique()
         : Auth::user()->todos;
 
       return view('todos', [
         'todos' => $filteredTodos,
-        'tags' => $tags
+        'filterTagsCheck' => $filterTagsCheck,
+        'filterTags' => $filterTags,
       ]);
     }
 
-    private function getFilteredTodos(array $tags) {
-      $foundTags = Tag::whereIn('text', $tags)->get();
+    private function getFilteredTodos(array $filterTags) {
+      $foundTags = Tag::whereIn('text', $filterTags)->get();
 
       return $foundTags->map(function ($foundTag) {
         if($foundTag->todo->user_id === Auth::id()) {
