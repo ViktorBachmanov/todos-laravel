@@ -40,11 +40,14 @@ async function saveNewTodo() {
 
     spinner.style.opacity = 1;
 
-    const { data } = await axios.postForm("/todos", createPostBody());
-
-    todos.append(createCard(data));
-
-    $editTodoModal.modal("hide");
+    try {
+        const { data } = await axios.postForm("/todos", createPostBody());
+        todos.append(createCard(data));
+        $editTodoModal.modal("hide");
+    } catch (error) {
+        new bootstrap.Toast("#toast").show();
+        spinner.style.opacity = 0;
+    }
 }
 
 //================== Edit Todo ==================================
@@ -88,15 +91,20 @@ async function saveCorrectedTodo(todoId) {
 
     spinner.style.opacity = 1;
 
-    const { data } = await axios.postForm(`/todos/${todoId}`, {
-        ...createPostBody(),
-        _method: "PATCH",
-        delete_image: todoImageContainer.innerHTML === "" ? true : null,
-    });
+    try {
+        const { data } = await axios.postForm(`/todos/${todoId}`, {
+            ...createPostBody(),
+            _method: "PATCH",
+            delete_image: todoImageContainer.innerHTML === "" ? true : null,
+        });
 
-    replaceContent(data);
+        replaceContent(data);
 
-    $editTodoModal.modal("hide");
+        $editTodoModal.modal("hide");
+    } catch (error) {
+        new bootstrap.Toast("#toast").show();
+        spinner.style.opacity = 0;
+    }
 }
 
 //=======================================================
