@@ -6,6 +6,11 @@
 @import '_tags-filter.scss';
 
 
+.container.auth-form {
+  max-width: 20em;
+}
+
+
 #todos {
   display: flex;
   flex-wrap: wrap;

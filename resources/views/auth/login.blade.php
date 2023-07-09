@@ -1,6 +1,6 @@
 <x-layout>
 
-  <div class="container">
+  <div class="container auth-form">
 
     <!-- Validation Errors -->
     @error('password')
