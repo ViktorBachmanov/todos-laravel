@@ -66,12 +66,6 @@ export async function showEditTodoModal(todoId) {
         tagsContainer.append(createTagBadge(tag, true));
     });
 
-    tagsContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("tag-close-button")) {
-            e.target.parentNode.remove();
-        }
-    });
-
     if (data.previewImage) {
         const todoImage = document.createElement("img");
         todoImage.src = `/storage/${data.previewImage.path}`;
@@ -122,4 +116,26 @@ editTodoModal.addEventListener("hidden.bs.modal", (event) => {
     spinner.style.opacity = 0;
     todoFileInput.value = "";
     todoTextEl.classList.remove("is-invalid");
+});
+
+todoFileInput.addEventListener("change", (e) => {
+    if (!e.target.files.length) {
+        return;
+    }
+
+    const img = document.createElement("img");
+    img.setAttribute("class", "selected-image");
+    img.src = URL.createObjectURL(e.target.files[0]);
+
+    img.onload = () => {
+        URL.revokeObjectURL(img.src);
+    };
+    todoImageContainer.innerHTML = "";
+    todoImageContainer.append(img);
+});
+
+tagsContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("tag-close-button")) {
+        e.target.parentNode.remove();
+    }
 });
