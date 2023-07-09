@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Str;
+
+
 use App\Models\Todo;
 use App\Models\User;
 use App\Models\Image;
@@ -26,6 +29,20 @@ class TodoController extends Controller
      * Show the all Todos.
      */
     public function index(Request $request) {
+      $search = $request->query('search', null);
+      // if($search) {
+      //   return redirect('/')->with('search', $search);
+      // }
+
+      $todos = Auth::user()->todos;
+
+      // $search = session('search');
+      if($search) {
+        $todos = $todos->filter(function($todo) use ($search) {
+          return Str::contains($todo->text, $search);
+        });
+      }
+
       $filterTagsCheck = isset($_COOKIE['filter-tags-check'])
          ? json_decode($_COOKIE['filter-tags-check'])
          : false;
@@ -34,24 +51,23 @@ class TodoController extends Controller
         ? json_decode($_COOKIE['filter-tags'])
         : [];
       
-      $filteredTodos = $filterTagsCheck && count($filterTags) > 0
-        ? $this->getFilteredTodos($filterTags)->unique()
-        : Auth::user()->todos;
+      if($filterTagsCheck && count($filterTags) > 0) {
+        $todos = $this->filterTodos($todos, $filterTags);
+      }
 
       return view('todos', [
-        'todos' => $filteredTodos,
+        'todos' => $todos,
         'filterTagsCheck' => $filterTagsCheck,
         'filterTags' => $filterTags,
+        'search' => $search,
       ]);
     }
 
-    private function getFilteredTodos(array $filterTags) {
-      $foundTags = Tag::whereIn('text', $filterTags)->get();
-
-      return $foundTags->map(function ($foundTag) {
-        if($foundTag->todo->user_id === Auth::id()) {
-         return $foundTag->todo;
-        }
+    private function filterTodos($todos, array $filterTags) {
+      return $todos->filter(function($todo) use ($filterTags) {
+        return $todo->tags->contains(function($tag) use ($filterTags) {
+          return in_array($tag->text, $filterTags);
+        });
       });
 
     }
