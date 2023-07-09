@@ -1,5 +1,5 @@
 import { createCard, replaceContent } from "./todo-card.js";
-import { createTagBadge } from "./tag-badge";
+import { createTagBadge, getTags } from "./tag-badge";
 
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");
@@ -66,6 +66,12 @@ export async function showEditTodoModal(todoId) {
         tagsContainer.append(createTagBadge(tag, true));
     });
 
+    tagsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("tag-close-button")) {
+            e.target.parentNode.remove();
+        }
+    });
+
     if (data.previewImage) {
         const todoImage = document.createElement("img");
         todoImage.src = `/storage/${data.previewImage.path}`;
@@ -104,18 +110,9 @@ async function saveCorrectedTodo(todoId) {
 function createPostBody() {
     return {
         text: todoTextEl.value,
-        tags: getTags(),
+        tags: getTags(editTodoModal),
         image: todoFileInput.files[0],
     };
-}
-
-function getTags() {
-    const tagsArray = [];
-    editTodoModal.querySelectorAll(".tag-text").forEach((tagText) => {
-        tagsArray.push(tagText.textContent);
-    });
-
-    return tagsArray;
 }
 
 editTodoModal.addEventListener("hidden.bs.modal", (event) => {

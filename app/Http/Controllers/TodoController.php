@@ -25,8 +25,15 @@ class TodoController extends Controller
     /**
      * Show the all Todos.
      */
-    public function index() {
-      return view('todos', ['todos' => Auth::user()->todos]);
+    public function index(Request $request) {
+      $tags = json_decode($_COOKIE['tags']);
+      // $tags = $_COOKIE['tags'];
+
+
+      return view('todos', [
+        'todos' => Auth::user()->todos,
+        'tags' => $tags
+      ]);
     }
 
     /**
