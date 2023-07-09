@@ -6,7 +6,7 @@
     </button>
 
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search" id="search-input" style="min-width: 20em" aria-label="Todos search">
+      <input type="text" class="form-control" placeholder="Search" id="search-input" value="{{ request('search', '') }}" style="min-width: 20em" aria-label="Todos search">
       <button class="btn btn-outline-secondary" type="button" id="search-button">
         <i class="bi bi-search"></i>
       </button>

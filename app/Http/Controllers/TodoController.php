@@ -30,13 +30,13 @@ class TodoController extends Controller
      */
     public function index(Request $request) {
       $search = $request->query('search', null);
-      if($search) {
-        return redirect('/')->with('search', $search);
-      }
+      // if($search) {
+      //   return redirect('/')->with('search', $search);
+      // }
 
       $todos = Auth::user()->todos;
 
-      $search = session('search');
+      // $search = session('search');
       if($search) {
         $todos = $todos->filter(function($todo) use ($search) {
           return Str::contains($todo->text, $search);
@@ -59,6 +59,7 @@ class TodoController extends Controller
         'todos' => $todos,
         'filterTagsCheck' => $filterTagsCheck,
         'filterTags' => $filterTags,
+        'search' => $search,
       ]);
     }
 
