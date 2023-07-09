@@ -5,10 +5,10 @@
       <span style="white-space: nowrap">Add Todo</span>
     </button>
 
-    <div class="input-group">
+    {{-- <div class="input-group">
       <input type="text" class="form-control" placeholder="Tags filter" id="tags-filter-input-old" style="min-width: 20em" aria-label="Tags filter">
       <button class="btn btn-outline-secondary" type="button" id="filter-tags-button">Filter</button>
-    </div>
+    </div> --}}
   
       <span>
         {{ Auth::user()->name }}
