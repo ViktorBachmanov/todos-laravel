@@ -17,5 +17,6 @@ public/js/edit-todo-modal.js
 public/js/tags-filter.js
 public/js/todo-card.js
 public/js/todos.js
+public/js/app-bar.js
 public/mix-manifest.json
 public/fonts/vendor/bootstrap-icons
