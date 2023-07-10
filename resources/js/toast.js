@@ -13,6 +13,7 @@ class Toast {
     }
 
     show(message, role) {
+        this.reset();
         this.body.textContent = message;
         this.setRole(role);
 
