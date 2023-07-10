@@ -1,5 +1,6 @@
 import { showEditTodoModal } from "./edit-todo-modal";
 import { deleteTodo } from "./todo-card";
+import toast from "./toast";
 
 const todosContainer = document.getElementById("todos");
 
@@ -10,10 +11,14 @@ todosContainer.addEventListener("click", async function (e) {
     if (e.target.classList.contains("edit-button")) {
         showEditTodoModal(todoId);
     } else if (e.target.classList.contains("delete-button")) {
-        const result = await deleteTodo(todoId);
+        try {
+            await deleteTodo(todoId);
 
-        if (result === 1) {
+            toast.show("Todo deleted", "success");
+
             todoCard.remove();
+        } catch {
+            toast.show("Error", "danger");
         }
     }
 });

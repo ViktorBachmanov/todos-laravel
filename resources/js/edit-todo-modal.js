@@ -1,5 +1,6 @@
 import { createCard, replaceContent } from "./todo-card.js";
 import { createTagBadge, getTags } from "./tag-badge";
+import toast from "./toast.js";
 
 const editTodoModal = document.getElementById("edit-todo-modal");
 const $editTodoModal = $("#edit-todo-modal");
@@ -42,10 +43,11 @@ async function saveNewTodo() {
 
     try {
         const { data } = await axios.postForm("/todos", createPostBody());
+        toast.show("Todo saved", "success");
         todos.append(createCard(data));
         $editTodoModal.modal("hide");
     } catch (error) {
-        new bootstrap.Toast("#toast").show();
+        toast.show("Error", "danger");
         spinner.style.opacity = 0;
     }
 }
@@ -98,11 +100,13 @@ async function saveCorrectedTodo(todoId) {
             delete_image: todoImageContainer.innerHTML === "" ? true : null,
         });
 
+        toast.show("Todo saved", "success");
+
         replaceContent(data);
 
         $editTodoModal.modal("hide");
-    } catch (error) {
-        new bootstrap.Toast("#toast").show();
+    } catch {
+        toast.show("Error", "danger");
         spinner.style.opacity = 0;
     }
 }

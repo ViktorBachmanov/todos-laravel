@@ -18,6 +18,7 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/app-bar.js", "public/js")
     .js("resources/js/todos.js", "public/js")
     .js("resources/js/search.js", "public/js")
+    .js("resources/js/toast.js", "public/js")
     .sourceMaps()
     // .postCss("resources/css/app.css", "public/css", [
     //     //

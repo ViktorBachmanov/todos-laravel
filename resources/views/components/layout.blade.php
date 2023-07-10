@@ -17,14 +17,10 @@
     <body>
       <x-app-bar />      
 
+      <x-toast /> 
+      <script src="{{ mix('/js/toast.js') }}"></script> 
+
       {{ $slot }}
 
-      <div class="toast position-fixed bottom-0 end-0 m-3 text-bg-danger" style="max-width: 10em;" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
-        <div style="display: flex; align-items: center;" class="px-2">
-          <div class="toast-body">Error</div>
-          <button type="button" class="btn-close" style="margin-left: auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-      </div>
-      
     </body>
 </html>

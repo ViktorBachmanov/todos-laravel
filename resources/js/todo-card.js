@@ -73,8 +73,6 @@ async function deleteTodo(todoId) {
     const { data } = await axios.post(`/todos/${todoId}`, {
         _method: "DELETE",
     });
-
-    return data;
 }
 
 export { createCard, createTagBadge, replaceContent, deleteTodo };

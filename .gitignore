@@ -19,5 +19,6 @@ public/js/todo-card.js
 public/js/todos.js
 public/js/app-bar.js
 public/js/search.js
+public/js/toast.js
 public/mix-manifest.json
 public/fonts/vendor/bootstrap-icons
