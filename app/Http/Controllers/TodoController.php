@@ -35,7 +35,7 @@ class TodoController extends Controller
 
       if($search) {
         $todos = $todos->filter(function($todo) use ($search) {
-          return stristr($todo->text, $search);
+          return mb_stristr($todo->text, $search);
         });
       }
 
