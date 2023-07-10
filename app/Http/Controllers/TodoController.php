@@ -62,7 +62,7 @@ class TodoController extends Controller
     private function filterTodos($todos, array $filterTags) {
       return $todos->filter(function($todo) use ($filterTags) {
         return $todo->tags->contains(function($tag) use ($filterTags) {
-          return in_array($tag->text, $filterTags);
+          return mb_stristr(implode(' ', $filterTags), $tag->text);
         });
       });
 
