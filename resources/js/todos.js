@@ -1,5 +1,6 @@
-import { showEditTodoModal } from "./edit-todo-modal";
 import { deleteTodo } from "./todo-card";
+import editTodoModal from "./edit-todo-modal";
+
 import toast from "./toast";
 
 const todosContainer = document.getElementById("todos");
@@ -9,7 +10,7 @@ todosContainer.addEventListener("click", async function (e) {
     const todoId = todoCard.dataset.id;
 
     if (e.target.classList.contains("edit-button")) {
-        showEditTodoModal(todoId);
+        editTodoModal.showForEdit(todoId);
     } else if (e.target.classList.contains("delete-button")) {
         try {
             await deleteTodo(todoId);
@@ -22,3 +23,8 @@ todosContainer.addEventListener("click", async function (e) {
         }
     }
 });
+
+const newTodoButton = document.getElementById("new-todo-button");
+newTodoButton.onclick = () => {
+    editTodoModal.showForNew();
+};
