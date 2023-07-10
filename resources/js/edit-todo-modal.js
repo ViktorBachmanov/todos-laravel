@@ -7,11 +7,11 @@ const todosContainer = document.getElementById("todos");
 class EditTodoModal {
     constructor() {
         this.spinner = document.getElementById("edit-todo-modal-spinner");
-        this.todoTextEl = document.getElementById("todo-text");
-        this.todoImageContainer = document.getElementById("todo-image");
-        this.todoFileInput = document.getElementById("todo-image-input");
+        this.textEl = document.getElementById("todo-text");
+        this.imageContainer = document.getElementById("todo-image");
+        this.fileInput = document.getElementById("todo-image-input");
         this.addTagButton = document.getElementById("add-tag-button");
-        this.todoTagInput = document.getElementById("todo-tag-input");
+        this.tagInput = document.getElementById("todo-tag-input");
         this.tagsContainer = document.getElementById("tags-container");
         this.saveButton = document.getElementById("save-todo");
         this.elem = document.getElementById("edit-todo-modal");
@@ -25,15 +25,15 @@ class EditTodoModal {
 
     registerListeners() {
         this.elem.addEventListener("hidden.bs.modal", (event) => {
-            this.todoTextEl.value = "";
+            this.textEl.value = "";
             this.tagsContainer.innerHTML = "";
-            this.todoImageContainer.innerHTML = "";
+            this.imageContainer.innerHTML = "";
             this.spinner.style.opacity = 0;
-            this.todoFileInput.value = "";
-            this.todoTextEl.classList.remove("is-invalid");
+            this.fileInput.value = "";
+            this.textEl.classList.remove("is-invalid");
         });
 
-        this.todoFileInput.addEventListener("change", (e) => {
+        this.fileInput.addEventListener("change", (e) => {
             if (!e.target.files.length) {
                 return;
             }
@@ -45,8 +45,8 @@ class EditTodoModal {
             img.onload = () => {
                 URL.revokeObjectURL(img.src);
             };
-            this.todoImageContainer.innerHTML = "";
-            this.todoImageContainer.append(img);
+            this.imageContainer.innerHTML = "";
+            this.imageContainer.append(img);
         });
 
         this.tagsContainer.addEventListener("click", (e) => {
@@ -57,9 +57,9 @@ class EditTodoModal {
 
         this.addTagButton.onclick = () => {
             this.tagsContainer.append(
-                createTagBadge(this.todoTagInput.value, true)
+                createTagBadge(this.tagInput.value, true)
             );
-            this.todoTagInput.value = "";
+            this.tagInput.value = "";
         };
     }
 
@@ -69,8 +69,8 @@ class EditTodoModal {
     }
 
     async saveNewTodo() {
-        if (this.todoTextEl.value === "") {
-            this.todoTextEl.classList.add("is-invalid");
+        if (this.textEl.value === "") {
+            this.textEl.classList.add("is-invalid");
             return;
         }
 
@@ -101,7 +101,7 @@ class EditTodoModal {
         const { data } = await axios.get(`/todos/${todoId}`);
         this.spinner.style.opacity = 0;
 
-        this.todoTextEl.value = data.text;
+        this.textEl.value = data.text;
         data.tags.forEach((tag) => {
             this.tagsContainer.append(createTagBadge(tag, true));
         });
@@ -109,21 +109,21 @@ class EditTodoModal {
         if (data.previewImage) {
             const todoImage = document.createElement("img");
             todoImage.src = `/storage/${data.previewImage.path}`;
-            this.todoImageContainer.append(todoImage);
+            this.imageContainer.append(todoImage);
 
             const deleteImageButton = document.createElement("button");
             deleteImageButton.setAttribute("class", "btn btn-secondary ms-2");
             deleteImageButton.textContent = "Delete image";
             deleteImageButton.onclick = () =>
-                (this.todoImageContainer.innerHTML = "");
+                (this.imageContainer.innerHTML = "");
 
-            this.todoImageContainer.append(deleteImageButton);
+            this.imageContainer.append(deleteImageButton);
         }
     }
 
     async saveCorrectedTodo(todoId) {
-        if (this.todoTextEl.value === "") {
-            this.todoTextEl.classList.add("is-invalid");
+        if (this.textEl.value === "") {
+            this.textEl.classList.add("is-invalid");
             return;
         }
 
@@ -134,7 +134,7 @@ class EditTodoModal {
                 ...this.createPostBody(),
                 _method: "PATCH",
                 delete_image:
-                    this.todoImageContainer.innerHTML === "" ? true : null,
+                    this.imageContainer.innerHTML === "" ? true : null,
             });
 
             toast.show("Todo saved", "success");
@@ -150,9 +150,9 @@ class EditTodoModal {
 
     createPostBody() {
         return {
-            text: this.todoTextEl.value,
+            text: this.textEl.value,
             tags: getTags(this.tagsContainer),
-            image: this.todoFileInput.files[0],
+            image: this.fileInput.files[0],
         };
     }
 }
